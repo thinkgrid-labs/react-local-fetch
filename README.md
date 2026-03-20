@@ -113,6 +113,10 @@ await clearAllStorage();
 3. **Silent Update**: If the API returns new data, update IndexedDB and the UI state automatically.
 4. **Resilience**: If the user is offline or the API is down, the UI stays functional using the last known good data.
 
+## 👥 Contributors
+
+- **Dennis P.** ([dennis@thinkgrid.dev](mailto:dennis@thinkgrid.dev)) 
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
