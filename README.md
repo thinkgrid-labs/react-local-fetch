@@ -101,6 +101,14 @@ await removeFromStorage('user-routes');
 await clearAllStorage();
 ```
 
+## 🔐 Security Best Practices
+
+When using `encrypt: true`, you **MUST NOT** hardcode the `secret` in your frontend source code! Doing so renders the encryption completely useless, as anyone can inspect your client bundle and find the key. 
+
+Instead, the `secret` should either be:
+1. Derived from user input (e.g., a PIN code or password they enter).
+2. Retrieved dynamically from your backend for the active session and stored only in memory.
+
 ## ⚙️ Configuration Options
 
 | Option | Type | Default | Description |

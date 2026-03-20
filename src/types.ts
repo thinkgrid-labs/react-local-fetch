@@ -19,6 +19,10 @@ export interface LocalFetchOptions {
    * Default: 'reactive'
    */
   updateStrategy?: 'silent' | 'reactive';
+  /** Revalidate data when the window regains focus. */
+  revalidateOnFocus?: boolean;
+  /** Revalidate data when the network reconnects. */
+  revalidateOnReconnect?: boolean;
 }
 
 export interface CacheMetadata {
@@ -30,7 +34,7 @@ export interface CacheMetadata {
 }
 
 export interface CacheEntry<T> {
-  data: T | any; // Encrypted blob or raw JSON
+  data: unknown; // Encrypted blob or raw JSON
   metadata: CacheMetadata;
 }
 
