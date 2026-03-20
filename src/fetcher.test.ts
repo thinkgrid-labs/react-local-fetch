@@ -26,6 +26,7 @@ describe('localFetch fetcher', () => {
   });
 
   it('should fetch from network if cache is empty', async () => {
+    const uniqueOptions = { ...options, key: 'test-key-1' };
     const mockData = { id: 1, name: 'Test' };
     (storage.getFromStorage as any).mockResolvedValue(undefined);
     (fetch as any).mockResolvedValue({
@@ -33,13 +34,14 @@ describe('localFetch fetcher', () => {
       json: () => Promise.resolve(mockData),
     });
 
-    const result = await localFetch(url, options);
+    const result = await localFetch(url, uniqueOptions);
 
     expect(result).toEqual(mockData);
     expect(storage.saveToStorage).toHaveBeenCalled();
   });
 
   it('should return from cache if valid and not expired', async () => {
+    const uniqueOptions = { ...options, key: 'test-key-2' };
     const mockData = { id: 1, name: 'Cached' };
     (storage.getFromStorage as any).mockResolvedValue({
       data: mockData,
@@ -50,13 +52,14 @@ describe('localFetch fetcher', () => {
       },
     });
 
-    const result = await localFetch(url, options);
+    const result = await localFetch(url, uniqueOptions);
 
     expect(result).toEqual(mockData);
     expect(fetch).toHaveBeenCalledTimes(1); // Background revalidation
   });
 
   it('should clear cache if version is mismatched', async () => {
+    const uniqueOptions = { ...options, key: 'test-key-3' };
     const mockData = { id: 2, name: 'New' };
     (storage.getFromStorage as any).mockResolvedValue({
       data: { id: 1, name: 'Old' },
@@ -71,7 +74,7 @@ describe('localFetch fetcher', () => {
       json: () => Promise.resolve(mockData),
     });
 
-    const result = await localFetch(url, options);
+    const result = await localFetch(url, uniqueOptions);
 
     expect(result).toEqual(mockData);
     expect(storage.saveToStorage).toHaveBeenCalled();
